@@ -133,6 +133,10 @@ function loginUser($conn, $badgeID, $userPwd) {
     }
     else if ($checkPwd == true){
         session_start();
+        require_once 'dbh.inc.php';
+        $date_time = date('Y-m-d H:i:s');
+        $sql = "UPDATE usersinfo SET userStatus = 1, date_time = NOW() WHERE badgeID = '$badgeID'";
+        $result=mysqli_query($conn, $sql);
         $_SESSION["$usersID"] = $badgeExists["$usersID"];
         $_SESSION["$badgeID"] = $badgeExists["$badgeID"];
         header("location: ../UserPage.php");
@@ -142,18 +146,110 @@ function loginUser($conn, $badgeID, $userPwd) {
     }
 }
 
-function acceptUser($conn, $badgeID){
-    $sql = "INSERT INTO onduty (badgeID) VALUES (?);";
+
+//ADMIN REGISTER
+function badgeIDCheckAdmin($conn, $badgeID) {
+    $sql = "SELECT * FROM admins WHERE adminName = ?;";
     $stmt = mysqli_stmt_init($conn);
     if (!mysqli_stmt_prepare($stmt, $sql)) {
-        header("location: ../login.php?error=stmtfailed");
+        header("location: ../reg.php?error=stmtfailed");
         exit();
     }
 
     mysqli_stmt_bind_param($stmt, "s", $badgeID);
     mysqli_stmt_execute($stmt);
+
+    $resultData = mysqli_stmt_get_result($stmt);
+
+    if ($row = mysqli_fetch_assoc($resultData)) {
+        $result = false;
+        return $result;
+    }
+    else {
+        return $row;
+    }
+
     mysqli_stmt_close($stmt);
+}
+
+function badgeIDExistsAdmin($conn, $badgeID) {
+    $sql = "SELECT * FROM admins WHERE adminName = ?;";
+    $stmt = mysqli_stmt_init($conn);
+    if (!mysqli_stmt_prepare($stmt, $sql)) {
+        header("location: ../register.php?error=stmtfailed");
+        exit();
+    }
+
+    mysqli_stmt_bind_param($stmt, "s", $badgeID);
+    mysqli_stmt_execute($stmt);
+
+    $resultData = mysqli_stmt_get_result($stmt);
+
+    if ($row = mysqli_fetch_assoc($resultData)) {
+        return $row;
+    }
+    else {
+        $result = false;
+        return $result;
+    }
+
+    mysqli_stmt_close($stmt);
+}
+
+function createUserAdmin($conn, $badgeID, $userPwd) {
+    $sql = "INSERT INTO admins (adminName, adminPwd) VALUES (?, ?);";
+    $stmt = mysqli_stmt_init($conn);
+    if (!mysqli_stmt_prepare($stmt, $sql)) {
+        header("location: ../reg.php?error=stmtfailed");
+        exit();
+    }
+
+    $hashedPwd = password_hash($userPwd, PASSWORD_DEFAULT);
+
+    mysqli_stmt_bind_param($stmt, "ss", $badgeID, $hashedPwd);
+    mysqli_stmt_execute($stmt);
+    mysqli_stmt_close($stmt);
+    header("location: ../reg.php?error=none");
     exit();
+}
+
+
+//ADMIN LOGIN
+function emptyInputLoginAdmin($badgeID, $userPwd) {
+    $result;
+    if ( empty($badgeID) || empty($userPwd)) {
+        $result = true;
+    }
+    else {
+        $result = false;
+    }
+    return $result;
+}
+
+function loginAdmin($conn, $badgeID, $userPwd) {
+    $badgeExists = badgeIDExistsAdmin($conn, $badgeID);
+
+    if ($badgeExists == false){
+        header("location: ../adminLogin.php?error=doesntexist/wrongusername");
+        exit();
+    }
+
+    $Pwdhashed = $badgeExists["adminPwd"];
+    $checkPwd = password_verify($userPwd, $Pwdhashed);
+
+    if ($checkPwd == false){
+        header("location: ../adminLogin.php?error=wrongpassword");
+        exit();
+    }
+    else if ($checkPwd == true){
+        session_start();
+        $_SESSION["$usersID"] = $badgeExists["$usersID"];
+        $_SESSION["$badgeID"] = $badgeExists["$badgeID"];
+        header("location: ../adminpage.php");
+
+        acceptUser($conn, $badgeID);
+        exit();
+    }
 }
 
 
@@ -214,5 +310,177 @@ function report($conn, $lastName, $firstName, $middleName, $birthday, $licenseNu
     mysqli_stmt_execute($stmt);
     mysqli_stmt_close($stmt);
     header("location: ../report.php?error=none");
+    exit();
+}
+
+
+//Status
+function emptyInputStatus($lName, $bday, $status) {
+    $result;
+    if ( empty($lName) || empty($bday) ||  empty($status)) {
+        $result = true;
+    }
+    else {
+        $result = false;
+    }
+    return $result;
+}
+function reviewed($conn, $id, $lName, $bday, $date_time, $status, $badgeID) {
+    $sql = "UPDATE video SET lastName = ?, bday = ?, date_time = ?,status = ?, badgeID = ? WHERE videoID= $id";
+    $stmt = mysqli_stmt_init($conn);
+    if (!mysqli_stmt_prepare($stmt, $sql)) {
+        header("location: " . $_SERVER['PHP_SELF'] . "?error=stmtfailed");
+        exit();
+    }
+
+    mysqli_stmt_bind_param($stmt, "sssss", $lName, $bday, $date_time, $status, $badgeID);
+    mysqli_stmt_execute($stmt);
+    mysqli_stmt_close($stmt);
+    header("location: ../illegallane.php?error=none");
+    exit();
+}
+function unaddressed($conn, $id, $date_time, $status, $badgeID) {
+    $sql = "UPDATE video SET date_time = ?, status = ?, badgeID = ? WHERE videoID = $id";
+    $stmt = mysqli_stmt_init($conn);
+    if (!mysqli_stmt_prepare($stmt, $sql)) {
+        header("location: ../illegallane.php?error=stmtfailed");
+        exit();
+    }
+
+    mysqli_stmt_bind_param($stmt, "sss", $date_time, $status, $badgeID);
+    mysqli_stmt_execute($stmt);
+    mysqli_stmt_close($stmt);
+    header("location: ../illegallane.php?error=none");
+    exit();
+}
+
+//Admin Dashboard
+function emptyDashboard($badgeID, $adminID) {
+    $result;
+    if ( empty($badgeID) || empty($adminID)) {
+        $result = true;
+    }
+    else {
+        $result = false;
+    }
+    return $result;
+}
+
+function adminIDExists($conn, $adminID) {
+    $sql = "SELECT * FROM admins WHERE adminName = ?;";
+    $stmt = mysqli_stmt_init($conn);
+    if (!mysqli_stmt_prepare($stmt, $sql)) {
+        header("location: ../adminpage.php?error=stmtfailed");
+        exit();
+    }
+
+    mysqli_stmt_bind_param($stmt, "s", $adminID);
+    mysqli_stmt_execute($stmt);
+
+    $resultData = mysqli_stmt_get_result($stmt);
+
+    if ($row = mysqli_fetch_assoc($resultData)) {
+        return $row;
+    }
+    else {
+        $result = false;
+        return $result;
+    }
+
+    mysqli_stmt_close($stmt);
+}
+
+function IDExists($conn, $badgeID) {
+    $sql = "SELECT * FROM ids WHERE badgeID = ?;";
+    $stmt = mysqli_stmt_init($conn);
+    if (!mysqli_stmt_prepare($stmt, $sql)) {
+        header("location: ../adminpage.php?error=stmtfailed");
+        exit();
+    }
+
+    mysqli_stmt_bind_param($stmt, "s", $badgeID);
+    mysqli_stmt_execute($stmt);
+
+    $resultData = mysqli_stmt_get_result($stmt);
+
+    if ($row = mysqli_fetch_assoc($resultData)) {
+        return $row;
+    }
+    else {
+        $result = false;
+        return $result;
+    }
+
+    mysqli_stmt_close($stmt);
+}
+
+function registerBadge($conn, $badgeID, $adminID, $date_time) {
+    $adminExists = adminIDExists($conn, $adminID);
+    $IDExists = IDExists($conn, $badgeID);
+
+// if (($IDExists == true && $adminID == false) || ($IDExists == false && $adminID == false) || ($IDExists == true && $adminID == true))
+    if ((!empty($IDExists) && empty($adminExists)) || (empty($IDExists) && empty($adminExists)) || (!empty($IDExists) && !empty($adminExists))){
+        header("location: ../adminpage.php?error=checkdetails");
+        exit();
+    }
+
+    $sql = "INSERT INTO ids (badgeID, adminID, date_time) VALUES (?, ?, ?);";
+    $stmt = mysqli_stmt_init($conn);
+    if (!mysqli_stmt_prepare($stmt, $sql)) {
+        header("location: ../adminpage.php?error=stmtfailed");
+        exit();
+    }
+
+    mysqli_stmt_bind_param($stmt, "sss", $badgeID, $adminID, $date_time);
+    mysqli_stmt_execute($stmt);
+    mysqli_stmt_close($stmt);
+    header("location: ../adminpage.php?error=none");
+    exit();
+}
+
+function badgeIDAdmin($conn, $badgeID) {
+    $sql = "SELECT * FROM usersinfo WHERE badgeID = ?;";
+    $stmt = mysqli_stmt_init($conn);
+    if (!mysqli_stmt_prepare($stmt, $sql)) {
+        header("location: ../register.php?error=stmtfailed");
+        exit();
+    }
+
+    mysqli_stmt_bind_param($stmt, "s", $badgeID);
+    mysqli_stmt_execute($stmt);
+
+    $resultData = mysqli_stmt_get_result($stmt);
+
+    if ($row = mysqli_fetch_assoc($resultData)) {
+        return $row;
+    }
+    else {
+        $result = false;
+        return $result;
+    }
+
+    mysqli_stmt_close($stmt);
+}
+
+function removeBadge($conn, $badgeID) {
+    $badgeExists = badgeIDAdmin($conn, $badgeID);
+    $IDExists = IDExists($conn, $badgeID);
+
+    if (empty($IDExists) && empty($badgeExists)){
+        header("location: ../adminpage.php?error=doesntexist/wrongusername");
+        exit();
+    }
+
+    $sql = "DELETE ids, usersinfo FROM ids LEFT JOIN usersinfo ON ids.badgeID = usersinfo.badgeID WHERE ids.badgeID = ?";
+    $stmt = mysqli_stmt_init($conn);
+    if (!mysqli_stmt_prepare($stmt, $sql)) {
+        header("location: ../adminpage.php?error=stmtfailed");
+        exit();
+    }
+
+    mysqli_stmt_bind_param($stmt, "s", $badgeID);
+    mysqli_stmt_execute($stmt);
+    mysqli_stmt_close($stmt);
+    header("location: ../adminpage.php?error=none");
     exit();
 }

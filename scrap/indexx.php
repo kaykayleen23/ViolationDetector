@@ -1,3 +1,8 @@
+<?php  
+ require_once 'includes/dbh.inc.php';
+ $query ="SELECT * FROM report";  
+ $result = mysqli_query($conn, $query);  
+ ?>  
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -56,9 +61,6 @@
             <li><a href="#">Profile</a></li>
             <li><a href="#">Help</a></li>
           </ul>
-          <form class="navbar-form navbar-right">
-            <input type="text" class="form-control" placeholder="Search...">
-          </form>
         </div>
       </div>
     </nav>
@@ -88,7 +90,7 @@
         <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
           <h1 class="page-header">Dashboard</h1>
 
-          <div class="row placeholders">
+          <!--<div class="row placeholders">
             <div class="col-xs-6 col-sm-3 placeholder">
               <img src="data:image/gif;base64,R0lGODlhAQABAIAAAHd3dwAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==" width="200" height="200" class="img-responsive" alt="Generic placeholder thumbnail">
               <h4>Label</h4>
@@ -109,10 +111,10 @@
               <h4>Label</h4>
               <span class="text-muted">Something else</span>
             </div>
-          </div>
+          </div>-->
 
           <h2 class="sub-header">Section title</h2>
-          <div class="container">  
+          <div class="">  
             <h3 align="center">Report Table</h3>  
             <br />  
             <div class="table-responsive">  
@@ -162,13 +164,7 @@
     <!-- Bootstrap core JavaScript
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-    <script>window.jQuery || document.write('<script src="../../assets/js/vendor/jquery.min.js"><\/script>')</script>
-    <script src="../../dist/js/bootstrap.min.js"></script>
-    <!-- Just to make our placeholder images work. Don't actually copy the next line! -->
-    <script src="../../assets/js/vendor/holder.min.js"></script>
     <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
-    <script src="../../assets/js/ie10-viewport-bug-workaround.js"></script>
     <script>  
       $(document).ready(function(){  
            $('#employee_data').DataTable();  

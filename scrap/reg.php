@@ -1,31 +1,3 @@
-<!DOCTYPE html>
-<html>
-
-<head>
-    <meta charset="utf-8" />
-    <title>Register - Violation Detector</title>
-    <meta content="width=device-width, initial-scale=1" name="viewport" />
-    <link href="/webapp/css/style.css" rel="stylesheet" type="text/css" />
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Karla:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Lora:wght@400;500&family=Montserrat:ital,wght@0,200;0,400;0,500;1,400&family=Rubik:wght@300;400;500&display=swap" rel="stylesheet">
-    <style>
-        .center {
-            padding: 2rem 0;
-            text-align: center;
-            margin: 0;
-        }
-
-        .content-center {
-            margin: auto !important;
-        }
-
-        .text-center {
-            text-align: center !important;
-        }
-    </style>
-</head>
-
 <body class="bg-whitee">
     <div class="">
         <div class="block-vweighted block-weighted m-1 ">
@@ -33,25 +5,7 @@
                 <div class="absolute login-flow pt-4 register-form-padding h100">
                     <h1 class="h2 m-0 mb-1 text-center">Welcome!</h1>
                     <p class="text-center p-small mb-2">Please enter your details.</p>
-                    <form class="px-2" action="includes/register.inc.php" method="post">
-                        <div class="block-weighted block-vweighted mob-mb-1">
-                            <div class="weight-50" id="order-1">
-                                <div class=" mx-2 mb-05">
-                                    <label for="first-name" class=" ">First Name</label>
-                                </div>
-                                <div class=" mx-3 mb-2">
-                                    <input type="text" class="" maxlength="256" name="first-name" data-name="First Name" placeholder="" id="input" />
-                                </div>
-                            </div>
-                            <div class="weight-50" id="order-2">
-                                <div class=" mx-2 mb-05">
-                                    <label for="last-name" class=" ">Last Name</label>
-                                </div>
-                                <div class=" mx-3">
-                                    <input type="text" class="" maxlength="256" name="last-name" data-name="Last Name" placeholder="" id="input" />
-                                </div>
-                            </div>
-                        </div>
+                    <form class="px-2" action="includes/reg.admin.inc.php" method="post">
                         <div class="block-weighted block-vweighted mob-mb-1">
                             <div class="weight-50" id="order-3">
                                 <div class=" mx-2 mb-05">
@@ -59,15 +13,6 @@
                                 </div>
                                 <div class=" mx-3 mb-2">
                                     <input type="text" class="" maxlength="256" name="id-number" data-name="Id Number" placeholder="" id="input" />
-                                </div>
-                            </div>
-                            <div class="weight-50" id="order-4">
-
-                                <div class=" mx-2 mb-05">
-                                    <label for="phone-number" class=" ">Phone Number</label>
-                                </div>
-                                <div class=" mx-3 mb-2">
-                                    <input type="tel" class="" maxlength="256" name="phone-number" data-name="phone-number" placeholder="" id="input" />
                                 </div>
                             </div>
                         </div>
@@ -80,8 +25,8 @@
                         <div class="block-weighted block-vweighted mob-mb-1">
                             <div class=" mb-05 content-hcenter weight-50">
                                 <input type="submit" class="button-dark button-dark-main button-radius2 con"
-                                    name="Register" value="Register" data-name="Register" placeholder=""
-                                    id="Register" />
+                                    name="click" value="click" data-name="click" placeholder=""
+                                    id="click" />
                             </div>
                             <div class=" mb-05 content-hcenter weight-50">
                                 <input type="submit" class="button-dark button-dark-main button-radius2 con"
@@ -89,33 +34,6 @@
                             </div>
                         </div>
                     </form>
-                    <center class="mt-2">
-                    <?php
-                        if (isset($_GET["error"])) {
-                            if ($_GET["error"] == "emptyinput") {
-                                echo "<p>Fill in all fields!</p>";
-                            }
-                        else if ($_GET["error"] == "invaliduserID") {
-                            echo "<p>Please enter a valid ID.</p>";
-                            }
-                        else if ($_GET["error"] == "invalidPhoneNumber") {
-                            echo "<p>Please enter a valid phone number.</p>";
-                            }
-                        else if ($_GET["error"] == "IDdoesntexit") {
-                            echo "<p>ID number does not exist.</p>";
-                            }
-                        else if ($_GET["error"] == "usernametaken") {
-                            echo "<p>ID number has already been registered.</p>";
-                            }
-                        else if ($_GET["error"] == "stmtfailed") {
-                            echo "<p>Something went wrong. please try again.</p>";
-                            }
-                        else if ($_GET["error"] == "none") {
-                            echo "<p>You have been registered! Please log in.</p>";
-                            }
-                        }
-                    ?>
-                    </center>
                 </div>
             </div>
             <div class="weight-50 outline text-center mob-hidden weight-70-bg2 h-100-m"></div>
@@ -175,15 +93,3 @@
     </div>
     </div>
 </body>
-<script>
-function myFunction() {
-  var x = document.getElementById("myDIV");
-  if (x.style.display === "none") {
-    x.style.display = "block";
-  } else {
-    x.style.display = "none";
-  }
-}
-</script>
-
-</html>

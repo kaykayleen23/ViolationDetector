@@ -15,6 +15,53 @@ body {
 
 }
 
+.button-reg {
+	text-align: center;
+	padding: 12px 25px;
+	width: 30%;
+	border-radius: 5px;
+	background-color: #f2f2f2;
+	-webkit-transition: background-color 400ms ease, opacity 400ms ease, color 400ms ease;
+	transition: background-color 400ms ease, opacity 400ms ease, color 400ms ease;
+	color: #4c7655;
+	font-size: 12px;
+	line-height: 20px;
+	letter-spacing: 2px;
+	text-decoration: none;
+	text-transform: uppercase;
+	border: 2px solid #4c7655;
+	font-family: 'Poppins', sans-serif;
+	cursor: pointer;
+  }
+
+.button-rem {
+	text-align: center;
+	padding: 12px 25px;
+	width: 30%;
+	border-radius: 5px;
+	background-color: #f2f2f2;
+	-webkit-transition: background-color 400ms ease, opacity 400ms ease, color 400ms ease;
+	transition: background-color 400ms ease, opacity 400ms ease, color 400ms ease;
+	color: #a42f2e;
+	font-size: 12px;
+	line-height: 20px;
+	letter-spacing: 2px;
+	text-decoration: none;
+	text-transform: uppercase;
+	border: 2px solid #a42f2e;
+	font-family: 'Poppins', sans-serif;
+	cursor: pointer;
+  }
+
+.button-reg:hover {
+	background-color: #4c7655;
+	color: var(--light);
+  }
+.button-rem:hover {
+	background-color: #a42f2e;
+	color: var(--light);
+  }
+
 /* text css */
 h1 {
   font-size: 53px;
@@ -284,6 +331,9 @@ label {
 .mb-05{
   margin: 0.5rem;
 }
+.mt-5o {
+  margin-top: 5rem;
+}
 .mt-2{
   margin-top: 2rem;
 }
@@ -321,6 +371,18 @@ label {
 }
 .mr-1{
   margin-right: 1rem !important;
+}
+.mt-0{
+  margin-top: 0rem;
+}
+.pl-1{
+  padding-left: 1rem;
+}
+.mb-3{
+  margin-bottom: 3rem;
+}
+.mt-4{
+  margin-top: 4rem;
 }
 /*END padding & margin */
 
@@ -481,7 +543,7 @@ label {
   width: 60%;
 }
 .h-min-200{
-  min-height: 250px;
+  min-height: 500px;
 }
 .h-min-350{
   min-height: 350px;
@@ -753,7 +815,7 @@ img {
 /*INDEX*/
 /*background of landing*/
 .bg-image {
-  background: linear-gradient(rgba(79, 107, 137, 0.60), rgba(200, 197, 192, 0.45)), url(./bg-image.jpg);
+  background: linear-gradient(rgba(79, 107, 137, 0.60), rgba(200, 197, 192, 0.45)), url(/webapp/images/bg-image.jpg);
   height: 100vh;
   background-size: cover;
   background-repeat: no-repeat;
@@ -779,7 +841,13 @@ img {
 /*LOG IN PAGE*/
 /*background image of login weight70 */
 .weight-70-bg{
-  background: url(./bg-1.jpg);
+  background: url(/webapp/images/bg-1.jpg);
+  background-size: cover;
+  background-repeat: no-repeat;
+  border-radius: 30px 0 30px 0;
+}
+.weight-70-bg3{
+  background: url(/webapp/images/loginadmin.avif);
   background-size: cover;
   background-repeat: no-repeat;
   border-radius: 30px 0 30px 0;
@@ -806,13 +874,18 @@ img {
   margin-top: 2rem;
   margin-left: 2rem;
 }
+
+.button-radiusn{
+  border-radius: 20px;
+  width: 50%;
+}
 /*END LOG IN PAGE*/
 
 
 /*REGISTER PAGE*/
 /*background image of register weight70 */
 .weight-70-bg2{
-  background: url(./bg-2.jpg);
+  background: url(/webapp/images/bg-2.jpg);
   background-size: cover;
   background-repeat: no-repeat;
   border-radius: 30px 0 30px 0;
@@ -828,6 +901,17 @@ img {
 }
 /*END REGISTER PAGE*/
 
+#form-container{
+  display: block;
+}
+
+/*ADMIN PAGES*/
+.topnav-admin {
+  margin: 0rem;
+  border-radius: 30px;
+  overflow: hidden;
+  background-color: #c8c5c0;
+}
 
 /*USER PAGE*/
 /*nav button things*/
@@ -854,7 +938,7 @@ h2.logo{
 .user-info{
   width: 70%;
   border-radius: 20px;
-  background-image: url(./bg-id.png);
+  background-image: url(/webapp/images/bg-id.png);
   background-repeat: no-repeat;
   background-position: center;
   background-size: cover;
@@ -910,6 +994,10 @@ h2.logo{
   height: 1px;
   background-color: #2b3542;
 }
+.button-radiusv{
+  border-radius: 5px;
+  width: 100%;
+}
 /*END USER PAGE*/
 
 
@@ -919,7 +1007,10 @@ h2.logo{
   border-radius: 10px;
   background-color: #748ba4;
   width: 90%;
-  height: 590px;
+  height: 600px;
+}
+.top-nav-admin {
+  margin: 1rem;
 }
 .top-nav {
   margin: 1rem;
@@ -934,6 +1025,15 @@ h2.logo{
   height: 50px;
   padding: 3rem 3rem 3rem 7rem;
 }
+#input-violation{
+  width: 99%;
+  height: 23px;
+  outline: none;
+  border-radius: 20px;
+  border: none;
+  background-color: #f2f2f2;
+  margin-bottom: 1.5rem;
+}
 .menu {
   display: flex;
   flex-direction: row;
@@ -942,6 +1042,14 @@ h2.logo{
   padding: 0;
 }
 .menu > a {
+  margin: 0 1rem;
+  overflow: hidden;
+}
+.menu > form {
+  margin: 0 1rem;
+  overflow: hidden;
+}
+.menu > input {
   margin: 0 1rem;
   overflow: hidden;
 }
@@ -993,6 +1101,16 @@ h2.logo{
 .button-radius-violation{
   border-radius: 20px;
   width: 80%;
+}
+.status-button{
+  width: 100%;
+  background-color: transparent;
+  border: none;
+}
+.status-button:hover{
+  background-color: #e0d3bb;
+  opacity: 40%;
+  cursor: pointer;
 }
 /*END VIOLATION PAGES*/
 
@@ -1826,7 +1944,7 @@ img {
 
 /*log in page*/
 .w-100-bg{
-  background-image: url(./bg-1.jpg);
+  background-image: url(/webapp/images/bg-1.jpg);
   background-position: center;
   background-size: cover;
 }
@@ -1841,7 +1959,7 @@ img {
 
 /*REGISTER PAGE*/
 .w-100-bg2{
-  background-image: url(./bg-2.jpg);
+  background-image: url(/webapp/images/bg-2.jpg);
   background-position: center;
   background-size: cover;
 }
@@ -1861,7 +1979,7 @@ img {
   border-radius: 10px;
   background-color: #748ba4;
   width: 90%;
-  height: 700px;
+  height: 750px;
 }
 .index-nav-flow{
   padding-left: 0;
@@ -1882,7 +2000,7 @@ img {
 .user-info{
   width: 90%;
   border-radius: 20px;
-  background-image: url(./bg-id.png);
+  background-image: url(/webapp/images/bg-id.png);
   background-repeat: no-repeat;
   background-position: center;
   background-size: cover;
@@ -1945,11 +2063,34 @@ img {
   color:#1f2631;
   background-color: #c8c5c0;
 }
+
+.menu > form {
+  display: flex;
+  justify-content: center;
+  margin: 0;
+  padding: 0.5em 0;
+  width: 100%;
+  padding-left: 7rem;
+  padding-right: 7rem;
+  background-color: #c8c5c0;
+}
+
+.menu > input {
+  display: flex;
+  justify-content: center;
+  margin: 0;
+  padding: 0.5em 0;
+  width: 60%;
+  background-color: #c8c5c0;
+}
 .menu > a:hover {
   text-decoration: underline;
 }
 .menu > a:not(:last-child) {
   border-bottom: 1px solid #444;
+}
+.extend{
+  height: auto;
 }
 /*END VIOLATION PAGES*/
 

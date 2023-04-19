@@ -1,11 +1,12 @@
 <?php
-$ID = $_POST["id-number"];
-if (isset($_POST["Logout"])) {
+
     
     session_start();
-    require_once 'includes/dbh.inc.php';
+    $ID = $_SESSION["id-number"];
+    require_once 'dbh.inc.php';
 
-    $sql = "DELETE FROM onduty WHERE badgeID = '$ID'";
+    $sql = "UPDATE usersinfo SET userStatus = 0, date_time = 0 WHERE badgeID = '$ID'";
+
     $stmt = mysqli_stmt_init($conn);
     if (!mysqli_stmt_prepare($stmt, $sql)) {
         header("location: ../UserPage.php?error=stmtfailed");
@@ -17,7 +18,7 @@ if (isset($_POST["Logout"])) {
     
     session_destroy();
 
-    header("Location: index.php");
-}
+    header("Location: /webapp/index.php");
+
 
 ?>

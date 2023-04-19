@@ -14,7 +14,7 @@ if (isset($_POST["report"])) {
     require_once 'functions.inc.php';
 
     if (emptyInputReport($lastName, $firstName, $birthday, $licenseNum, $licensePlate, $regNum, $violation) !== false) {
-        header("location: ../register.php?error=emptyinput");
+        header("location: ../report.php?error=emptyinput");
         exit();
     }
     if (invalidlicenseNum($licenseNum) !== false) {

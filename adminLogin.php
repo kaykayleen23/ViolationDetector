@@ -31,10 +31,10 @@
         <div class="block-weighted m-1 block-vweighted m-1">
             <div class="weight-30 relative">
                 <div class="absolute login-flow pt-4 register-form-padding h100">
-                    <h1 class="h2 m-0 mb-2 text-center">Welcome Back!</h1>
-                    <form class="px-2" action="includes/login.inc.php" method="post">
+                    <h1 class="h2 m-0 mb-2 text-center">Welcome Back, Admin!</h1>
+                    <form class="px-2" action="includes/admin.inc.php" method="post">
                         <div class=" mx-2 mb-05">
-                            <label for="id-number" class=" ">ID Number</label>
+                            <label for="id-number" class=" ">Username</label>
                         </div>
                         <div class=" mx-3 mb-2">
                             <input type="text" class="" maxlength="256" name="id-number" data-name="Id Number" placeholder="" id="input" />
@@ -50,10 +50,7 @@
                                     name="login"  value="login" data-name="login" placeholder="" id="login" />
                         </div>
                     </form>
-                    <div class=" mb-05 content-hcenter weight-50">
-                    <a href="./adminLogin.php" class="button-dark button-dark-main button-radius2 con">Admin</a>
-                        </div>
-                    <center class="mt-2">
+                    <center class="mt-2"> 
                     <?php
                         if (isset($_GET["error"])) {
                             if ($_GET["error"] == "doesntexist/wrongusername") {
@@ -70,7 +67,7 @@
                     </center>
                 </div>
             </div>
-            <div class="weight-70 outline text-center weight-70-bg h-100-m mob-hidden">
+            <div class="weight-70 outline text-center weight-70-bg3 h-100-m mob-hidden">
             </div>
 
         </div>

@@ -5,7 +5,7 @@
     <meta charset="utf-8" />
     <title>Home - Violation Detector</title>
     <meta content="width=device-width, initial-scale=1" name="viewport" />
-    <link href="./style.css" rel="stylesheet" type="text/css" />
+    <link href="/webapp/css/style.css" rel="stylesheet" type="text/css" />
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link

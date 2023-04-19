@@ -43,54 +43,10 @@ $badgeID1 = mysqli_fetch_array($results1);
                             html += '<div class="weight-80">';
                             html += '<p class=" h4">' + item.lastName + ', ' + item.badgeID + ' , ' + item.date_time + '</p>';
                             html += '</div>';
-                            html += '</div>';
-                            html += '<div class="underline">';  
+                            html += '<div class="underline">';      
                             html += '</div>';
                         });
                         $("#data-container").html(html);
-                    },
-                    error: function(jqXHR, textStatus, errorThrown) {
-                        // Handle errors if any
-                        console.log("Error: " + textStatus + ": " + errorThrown);
-                    }
-                });
-            }
-            // Call the fetchData function every 5 seconds to update the web page
-            setInterval(fetchData, 5000);
-        });
-    </script>
-        <script>
-        $(document).ready(function() {
-            // Define a function to fetch data from server and update the web page
-            function fetchData() {
-                $.ajax({
-                    url: "includes/data.inc.php",  // URL of the PHP script that retrieves data from database
-                    dataType: "json",   // Data type expected from server
-                    success: function(data) {
-                        // Update the web page with the retrieved data
-                        var html = "";
-                        $.each(data, function(index, item) {
-                            html += '<button class="status-button" data-id ="' + item.videoID + '">';
-                            html += '<div class="block-hweighted block-weighted ml-2">';
-                            html += '<div class="weight-20">';
-                            html += '<h3 class="h4-bold text-center">Details: </h3>';
-                            html += '</div>';
-                            html += '<div class="weight-80">';
-                            html += '<p class="h4">' + item.violation + ', ' + item.date_time + '</p>';
-                            html += '</div>';
-                            html += '</div>';
-                            html += '<div class="block-hweighted block-weighted ml-2 mb-1">';
-                            html += '<div class="weight-20">';
-                            html += '<h3 class="h4-bold text-center">Status: </h3>';
-                            html += '</div>';
-                            html += '<div class="weight-80">';
-                            html += '<p class="h4">' + item.status + '</p>';
-                            html += '</div>';
-                            html += '</div>';
-                            html += '</button>';
-                            html += '<div class="underline">';
-                        });
-                        $("#data").html(html);
                     },
                     error: function(jqXHR, textStatus, errorThrown) {
                         // Handle errors if any
@@ -133,7 +89,7 @@ $badgeID1 = mysqli_fetch_array($results1);
         </ul>
       </section>
     <div class="wrapper">
-        <div class="block-vweighted block-weighted mt-2">
+        <div class=" block-weighted mt-2">
             <div class="weight-50 block-vweighted " id="order-1">
                 <div class="content-hcenter h-min-200 mb-2" >
                     <div class="user-info h-min-100">
@@ -208,7 +164,7 @@ $badgeID1 = mysqli_fetch_array($results1);
                     </div>
                 </div>
             </div>
-            <div class="weight-50 mr-4 order-1 mob-m-0 mt-5o" id="order-2">
+            <div class="weight-50 mr-4 order-1 mob-m-0 mt-4" id="order-2">
                 <div class="content-hcenter h-min-200 mb-2" id="order-2">
                     <div class="logs-info h-min-200">
                         <div class="content-hcenter h-min-100 top-half">
@@ -216,8 +172,108 @@ $badgeID1 = mysqli_fetch_array($results1);
                                 <h2 class="h3-bold text-center">Logs</h2>
                             </div>
                         </div>
-                        <div class="h-min-350" id="data">
-
+                        <div class="h-min-350">
+                            <div class="block-weighted ml-2">
+                                <div class="weight-20">
+                                    <h3 class="h4-bold text-center">Details: </h3>
+                                </div>
+                                <div class="weight-80">
+                                    <p class="h4">Overspeeding, Dasmarinas, 13:01</p>
+                                </div>
+                            </div>
+                            <div class="block-weighted ml-2 mb-1">
+                                <div class="weight-20">
+                                    <h3 class="h4-bold text-center">Status: </h3>
+                                </div>
+                                <div class="weight-80">
+                                    <p class="unaddressed">Unaddressed</p>
+                                </div>
+                            </div>
+                            <div class="underline"></div>
+                            <div class="block-weighted ml-2 mt-1">
+                                <div class="weight-20">
+                                    <h3 class="h4-bold text-center">Details: </h3>
+                                </div>
+                                <div class="weight-80">
+                                    <p class="h4">Overspeeding, Dasmarinas, 13:01</p>
+                                </div>
+                            </div>
+                            <div class="block-weighted ml-2 mb-1">
+                                <div class="weight-20">
+                                    <h3 class="h4-bold text-center">Status: </h3>
+                                </div>
+                                <div class="weight-80">
+                                    <p class="pending">Pending</p>
+                                </div>
+                            </div>
+                            <div class="underline"></div>
+                            <div class="block-weighted ml-2 mt-1">
+                                <div class="weight-20">
+                                    <h3 class="h4-bold text-center">Details: </h3>
+                                </div>
+                                <div class="weight-80">
+                                    <p class="h4">Overspeeding, Dasmarinas, 13:01</p>
+                                </div>
+                            </div>
+                            <div class="block-weighted ml-2 mb-1">
+                                <div class="weight-20">
+                                    <h3 class="h4-bold text-center">Status: </h3>
+                                </div>
+                                <div class="weight-80">
+                                    <p class="reviewed">Reviewed</p>
+                                </div>
+                            </div>
+                            <div class="underline"></div>
+                            <div class="block-weighted ml-2 mt-1">
+                                <div class="weight-20">
+                                    <h3 class="h4-bold text-center">Details: </h3>
+                                </div>
+                                <div class="weight-80">
+                                    <p class="h4">Overspeeding, Dasmarinas, 13:01</p>
+                                </div>
+                            </div>
+                            <div class="block-weighted ml-2 mb-1">
+                                <div class="weight-20">
+                                    <h3 class="h4-bold text-center">Status: </h3>
+                                </div>
+                                <div class="weight-80">
+                                    <p class="unaddressed">Unaddressed</p>
+                                </div>
+                            </div>
+                            <div class="underline"></div>
+                            <div class="block-weighted ml-2 mt-1">
+                                <div class="weight-20">
+                                    <h3 class="h4-bold text-center">Details: </h3>
+                                </div>
+                                <div class="weight-80">
+                                    <p class="h4">Overspeeding, Dasmarinas, 13:01</p>
+                                </div>
+                            </div>
+                            <div class="block-weighted ml-2 mb-1">
+                                <div class="weight-20">
+                                    <h3 class="h4-bold text-center">Status: </h3>
+                                </div>
+                                <div class="weight-80">
+                                    <p class="pending">Pending</p>
+                                </div>
+                            </div>
+                            <div class="underline"></div>
+                            <div class="block-weighted ml-2 mt-1">
+                                <div class="weight-20">
+                                    <h3 class="h4-bold text-center">Details: </h3>
+                                </div>
+                                <div class="weight-80">
+                                    <p class="h4">Overspeeding, Dasmarinas, 13:01</p>
+                                </div>
+                            </div>
+                            <div class="block-weighted ml-2 mb-1">
+                                <div class="weight-20">
+                                    <h3 class="h4-bold text-center">Status: </h3>
+                                </div>
+                                <div class="weight-80">
+                                    <p class="reviewed">Reviewed</p>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
