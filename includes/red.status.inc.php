@@ -22,26 +22,25 @@ if (isset($_SESSION["id-number"])) {
 
 if (isset($_POST["Reviewed"])) {
     $status = $_POST["Reviewed"];
-    $lName = $_POST["last-name"];
-    $bday = $_POST["birthday"];
+    $licenseNum = $_POST["license-id"];
 
     require_once 'functions.inc.php';
 
     $date_time = date("Y-m-d H:i:s");
 
-    if (emptyInputStatus($lName, $bday, $status) !== false) {
-        header("Location: ../redlight.php?error=incomplete");
+    if (emptyInputStatus($licenseNum, $status) !== false) {
+        header("Location: ../redlight.php?error=incompletedetails");
         exit();
     }
 
-    reviewed($conn, $id, $lName, $bday, $date_time, $status, $badgeID);
+    redreviewed($conn, $id, $licenseNum, $date_time, $status, $badgeID);
     header("Location: ../redlight.php?error=none");
 }
 if (isset($_POST["Unaddressed"])) {
     $status = $_POST["Unaddressed"];
     require_once 'functions.inc.php';
     $date_time = date("Y-m-d H:i:s");
-    unaddressed($conn, $id, $date_time, $status, $badgeID);
+    redunaddressed($conn, $id, $date_time, $status, $badgeID);
     header("Location: ../redlight.php?error=none");
 }
 

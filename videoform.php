@@ -14,11 +14,11 @@ if (!$conn) {
 session_start();
 
 if (isset($_POST["Edit"])) {
-    $_SESSION['videoedit-id'] = $_POST['videoedit-id'];
+    $_SESSION['videoedit-id'] = $_POST['edit-id'];
     header("location: /webapp/video.form.php");
 }
 
 if (isset($_POST["Delete"])) {
-    $_SESSION['videoDelete-id'] = $_POST['videoDelete-id'];
+    $_SESSION['videoDelete-id'] = $_POST['Delete-id'];
     header("location: includes/videos.inc.php");
 }

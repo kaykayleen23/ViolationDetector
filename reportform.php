@@ -1,11 +1,10 @@
 <?php  
 session_start();
  require_once 'includes/dbh.inc.php';
- $ID = $_SESSION["report_edit_id"];
+ $ID = $_SESSION["edit-id"];
  $sql = "SELECT * FROM report where userID = '$ID'";
  $result = mysqli_query($conn, $sql);
  $data = mysqli_fetch_array($result);
- echo $ID;
  ?>  
  <!DOCTYPE html>  
  <html>  
@@ -137,12 +136,8 @@ session_start();
                     <div class="block-weighted block-vweighted mt-3 mb-2 mob-mb-1">
                             <div class="weight-50 content-hcenter mb-1" id="order-9">
                                 <input type="submit" class=" btn btn-default mr-2 " name="Edit" id="Edit"
-                                value="Edit" data-name="Edit" placeholder="" id="Edit" />
+                                value="Save" data-name="Edit" placeholder="" id="Edit" />
                             </div>
-                            <div class="weight-50 content-hcenter" id="order-9">
-                                <input type="submit" class=" btn btn-danger" name="Delete"
-                                value="Delete" data-name="Delete" placeholder="" id="Delete" />
-                        </div>
                     </div>
                 </form>
                 <center class="mt-2">

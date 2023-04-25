@@ -1,6 +1,6 @@
 <?php
 if (isset($_POST["report"])) {
-
+    session_start();
     $lastName = $_POST["last-name"];
     $firstName = $_POST["first-name"];
     $middleName = $_POST["middle-name"];
@@ -9,6 +9,8 @@ if (isset($_POST["report"])) {
     $licensePlate = $_POST["license-plate"];
     $regNum = $_POST["registration-number"];
     $violation = $_POST["violation"];
+    $date_time = date("Y-m-d H:i:s");
+    $ID = $_SESSION["id-number"];
 
     require_once 'dbh.inc.php';
     require_once 'functions.inc.php';
@@ -30,7 +32,7 @@ if (isset($_POST["report"])) {
         exit();
     }
     
-    report($conn, $lastName, $firstName, $middleName, $birthday, $licenseNum, $licensePlate, $regNum, $violation);
+    report($conn, $lastName, $firstName, $middleName, $birthday, $licenseNum, $licensePlate, $regNum, $violation,$date_time,$ID );
 }
 else {
     header("location: ../report.php");

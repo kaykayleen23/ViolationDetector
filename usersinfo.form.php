@@ -2,8 +2,7 @@
 session_start();
  require_once 'includes/dbh.inc.php';
  $ID = $_SESSION["edit-id"];
- $ID_delete = $_SESSION["Delete-id"];
- $sql = "SELECT * FROM usersinfo";
+ $sql = "SELECT * FROM usersinfo  WHERE usersID = '$ID'";
  $result = mysqli_query($conn, $sql);
  $data = mysqli_fetch_array($result);
  ?>  

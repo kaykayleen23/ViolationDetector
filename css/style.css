@@ -899,6 +899,103 @@ img {
 #myDiv{
   display: none !important;
 }
+
+.tacbox {
+  display:block;
+  padding: 1em;
+  border: 3px solid #ddd;
+  background-color: #eee;
+  width: auto;
+}
+
+#checkbox {
+  height: 2em;
+  width: 2em;
+  vertical-align: middle;
+}
+
+.width-auto{
+  width: auto;
+}
+
+.policy-terms{
+  color: #a42f2e;
+}
+.policy-terms :hover{
+  color: #1f2631;
+}
+.privacy-modal{
+  position: fixed;
+}
+.modal1 {
+  display: none; /* Hidden by default */
+  position: fixed; /* Stay in place */
+  z-index: 1; /* Sit on top */
+  padding-top: 100px; /* Location of the box */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: rgb(0,0,0); /* Fallback color */
+  background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+.modal2 {
+  display: none; /* Hidden by default */
+  position: fixed; /* Stay in place */
+  z-index: 1; /* Sit on top */
+  padding-top: 100px; /* Location of the box */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: rgb(0,0,0); /* Fallback color */
+  background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+/* Modal Content */
+.modal-content {
+  height: 550px;
+  background-color: #fefefe;
+  margin: auto;
+  padding: 2rem;
+  border: 1px solid #888;
+  width: 80%;
+  overflow-y: scroll;
+}
+
+/* The Close Button */
+.close1 {
+  color: #aaaaaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+}
+.close2 {
+  color: #aaaaaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.close1:hover,
+.close1:focus {
+  color: #000;
+  text-decoration: none;
+  cursor: pointer;
+}
+.close2:hover,
+.close2:focus {
+  color: #000;
+  text-decoration: none;
+  cursor: pointer;
+}
+.edit{
+  display: inline;
+}
+.w-auto{
+  width: auto;
+}
 /*END REGISTER PAGE*/
 
 #form-container{
@@ -1007,7 +1104,7 @@ h2.logo{
   border-radius: 10px;
   background-color: #748ba4;
   width: 90%;
-  height: 600px;
+  height: auto;
 }
 .top-nav-admin {
   margin: 1rem;
@@ -1979,7 +2076,7 @@ img {
   border-radius: 10px;
   background-color: #748ba4;
   width: 90%;
-  height: 750px;
+  height: auto;
 }
 .index-nav-flow{
   padding-left: 0;
@@ -2103,4 +2200,8 @@ img {
 }
 /*dropdown button stuff*/
 /*END REPORT PAGE*/
+
+.mob-mb-2{
+  margin-bottom: 2rem;
+}
 };

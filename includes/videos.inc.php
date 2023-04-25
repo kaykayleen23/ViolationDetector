@@ -5,25 +5,22 @@ $sql = "SELECT * FROM video";
 
 session_start();
 $videoID = $_SESSION["videoedit-id"];
-$videoID_delete = $_SESSION["videoDelete-id"];
-echo $videoID;
+$videoIDDelete = $_SESSION["videoDelete-id"];
 if (isset($_POST["Edit"])) {
-    $lastName = $_POST["last-name"];
-    $birthday = $_POST["birthday"];
+    $licenseID = $_POST["license-id"];
 
     $sql = "UPDATE video SET 
-            lastName = '$lastName', 
-            bday = '$birthday'
-            WHERE videoID = '$videoID'";
+    licenseNum = '$licenseID'
+    WHERE videoID = '$videoID'";
 
-            $result = mysqli_query($conn, $sql);
-            if($result){
-                header("Location: ../videos.php?error=none");
-            }
-}else{
-    $sql = "DELETE FROM video WHERE videoID = '$videoID_delete';";
     $result = mysqli_query($conn, $sql);
-    if($result){
+    if ($result) {
+        header("Location: ../videos.php?error=none");
+    }
+} else {
+    $sql = "DELETE FROM video WHERE videoID = '$videoIDDelete';";
+    $result = mysqli_query($conn, $sql);
+    if ($result) {
         header("Location: ../videos.php?error=none");
     }
 }

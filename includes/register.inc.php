@@ -6,12 +6,17 @@ if (isset($_POST["Register"])) {
     $badgeID = $_POST["id-number"];
     $userPhone = $_POST["phone-number"];
     $userPwd = $_POST["password"];
-
+    $checkbox = $_POST["checkbox"];
+ 
     require_once 'dbh.inc.php';
     require_once 'functions.inc.php';
 
     if (emptyInputSignup($firstName, $lastName, $badgeID, $userPhone, $userPwd) !== false) {
         header("location: ../register.php?error=emptyinput");
+        exit();
+    }
+    if (emptyCheckbox($checkbox) !== false) {
+        header("location: ../register.php?error=checkbox");
         exit();
     }
     if (invaliduserID($badgeID) !== false) {

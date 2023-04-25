@@ -14,11 +14,11 @@ if (!$conn) {
 session_start();
 
 if (isset($_POST["Edit"])) {
-    $_SESSION['report_edit_id'] = $_POST['report_edit_id'];
+    $_SESSION['edit-id'] = $_POST['edit-id'];
     header("location: /webapp/reportform.php");
 }
 
 if (isset($_POST["Delete"])) {
-    $_SESSION['report-delete-id'] = $_POST['report-delete-id'];
+    $_SESSION['delete-id'] = $_POST['delete-id'];
     header("location: includes/report.admin.inc.php");
 }

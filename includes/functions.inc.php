@@ -12,6 +12,17 @@ function emptyInputSignup($firstName, $lastName, $badgeID, $userPhone, $userPwd)
     return $result;
 }
 
+function emptyCheckbox($checkbox) {
+    $result;
+    if (empty($checkbox)) {
+        $result = true;
+    }
+    else {
+        $result = false;
+    }
+    return $result;
+}
+
 function invaliduserID($badgeID) {
     $result;
     if (!preg_match("/^[a-zA-Z0-9]*$/", $badgeID)) {
@@ -25,7 +36,7 @@ function invaliduserID($badgeID) {
 
 function invalidPhone($userPhone) {
     $result;
-    if (!preg_match('/^[0-9]{10}+$/', $userPhone)) {
+    if (!preg_match('/^[0-9]{11}+$/', $userPhone)) {
         $result = true;
     }
     else {
@@ -298,15 +309,15 @@ function invalidregNum($regNum) {
     return $result;
 }
 
-function report($conn, $lastName, $firstName, $middleName, $birthday, $licenseNum, $licensePlate, $regNum, $violation) {
-    $sql = "INSERT INTO report (lastName, firstName, middleName, birthday, licenseNum, licensePlate, regNum, violation) VALUES (?, ?, ?, ?, ?, ?, ?, ?);";
+function report($conn, $lastName, $firstName, $middleName, $birthday, $licenseNum, $licensePlate, $regNum, $violation, $date_time, $ID) {
+    $sql = "INSERT INTO report (lastName, firstName, middleName, birthday, licenseNum, licensePlate, regNum, violation, date, badgeID) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
     $stmt = mysqli_stmt_init($conn);
     if (!mysqli_stmt_prepare($stmt, $sql)) {
         header("location: ../report.php?error=stmtfailed");
         exit();
     }
 
-    mysqli_stmt_bind_param($stmt, "ssssssss", $lastName, $firstName, $middleName, $birthday, $licenseNum, $licensePlate, $regNum, $violation);
+    mysqli_stmt_bind_param($stmt, "ssssssssss", $lastName, $firstName, $middleName, $birthday, $licenseNum, $licensePlate, $regNum, $violation, $date_time, $ID );
     mysqli_stmt_execute($stmt);
     mysqli_stmt_close($stmt);
     header("location: ../report.php?error=none");
@@ -315,9 +326,9 @@ function report($conn, $lastName, $firstName, $middleName, $birthday, $licenseNu
 
 
 //Status
-function emptyInputStatus($lName, $bday, $status) {
+function emptyInputStatus($licenseNum, $status) {
     $result;
-    if ( empty($lName) || empty($bday) ||  empty($status)) {
+    if (empty($licenseNum) || empty($status)) {
         $result = true;
     }
     else {
@@ -325,34 +336,98 @@ function emptyInputStatus($lName, $bday, $status) {
     }
     return $result;
 }
-function reviewed($conn, $id, $lName, $bday, $date_time, $status, $badgeID) {
-    $sql = "UPDATE video SET lastName = ?, bday = ?, date_time = ?,status = ?, badgeID = ? WHERE videoID= $id";
+function illegalreviewed($conn, $id, $licenseNum, $date_time, $status, $badgeID) {
+    $sql = "UPDATE video SET licenseNum = ?, date_time = ?, status = ?, badgeID = ? WHERE videoID= ?";
+    $stmt = mysqli_stmt_init($conn);
+    if (!mysqli_stmt_prepare($stmt, $sql)) {
+        header("location: " . $_SERVER['PHP_SELF'] . "?error=stmtfailed");
+        exit();
+    }else{
+        mysqli_stmt_bind_param($stmt, "ssssi", $licenseNum, $date_time, $status, $badgeID, $id);
+        mysqli_stmt_execute($stmt);
+        mysqli_stmt_close($stmt);
+        header("location: ../illegallane.php?error=none");
+        exit();
+    }
+}
+
+function illegalunaddressed($conn, $id, $date_time, $status, $badgeID) {
+    $sql = "UPDATE video SET date_time = ?, status = ?, licenseNum = NULL, badgeID = ? WHERE videoID = ?";
     $stmt = mysqli_stmt_init($conn);
     if (!mysqli_stmt_prepare($stmt, $sql)) {
         header("location: " . $_SERVER['PHP_SELF'] . "?error=stmtfailed");
         exit();
     }
 
-    mysqli_stmt_bind_param($stmt, "sssss", $lName, $bday, $date_time, $status, $badgeID);
+    mysqli_stmt_bind_param($stmt, "sssi", $date_time, $status, $badgeID, $id);
     mysqli_stmt_execute($stmt);
     mysqli_stmt_close($stmt);
     header("location: ../illegallane.php?error=none");
     exit();
 }
-function unaddressed($conn, $id, $date_time, $status, $badgeID) {
-    $sql = "UPDATE video SET date_time = ?, status = ?, badgeID = ? WHERE videoID = $id";
+function overreviewed($conn, $id, $licenseNum, $date_time, $status, $badgeID) {
+    $sql = "UPDATE video SET licenseNum = ?, date_time = ?, status = ?, badgeID = ? WHERE videoID= ?";
     $stmt = mysqli_stmt_init($conn);
     if (!mysqli_stmt_prepare($stmt, $sql)) {
-        header("location: ../illegallane.php?error=stmtfailed");
+        header("location: " . $_SERVER['PHP_SELF'] . "?error=stmtfailed");
+        exit();
+    }else{
+        mysqli_stmt_bind_param($stmt, "ssssi", $licenseNum, $date_time, $status, $badgeID, $id);
+        mysqli_stmt_execute($stmt);
+        mysqli_stmt_close($stmt);
+        header("location: ../overspeeding.php?error=none");
+        exit();
+    }
+}
+function overunaddressed($conn, $id, $date_time, $status, $badgeID) {
+    $sql = "UPDATE video SET date_time = ?, status = ?, licenseNum = NULL, badgeID = ? WHERE videoID = ?";
+    $stmt = mysqli_stmt_init($conn);
+    if (!mysqli_stmt_prepare($stmt, $sql)) {
+        header("location: " . $_SERVER['PHP_SELF'] . "?error=stmtfailed");
+        exit();
+    }else{
+        mysqli_stmt_bind_param($stmt, "sssi", $date_time, $status, $badgeID, $id);
+        mysqli_stmt_execute($stmt);
+        mysqli_stmt_close($stmt);
+        header("location: ../overspeeding.php?error=none");
         exit();
     }
 
-    mysqli_stmt_bind_param($stmt, "sss", $date_time, $status, $badgeID);
-    mysqli_stmt_execute($stmt);
-    mysqli_stmt_close($stmt);
-    header("location: ../illegallane.php?error=none");
-    exit();
+
 }
+function redreviewed($conn, $id, $licenseNum, $date_time, $status, $badgeID) {
+    $sql = "UPDATE video SET licenseNum = ?, date_time = ?, status = ?, badgeID = ? WHERE videoID= ?";
+    $stmt = mysqli_stmt_init($conn);
+    if (!mysqli_stmt_prepare($stmt, $sql)) {
+        header("location: " . $_SERVER['PHP_SELF'] . "?error=stmtfailed");
+        exit();
+    }else{
+        mysqli_stmt_bind_param($stmt, "ssssi", $licenseNum, $date_time, $status, $badgeID, $id);
+        mysqli_stmt_execute($stmt);
+        mysqli_stmt_close($stmt);
+        header("location: ../redlight.php?error=none");
+        exit();
+    }
+}
+
+function redunaddressed($conn, $id, $date_time, $status, $badgeID) {
+    $sql = "UPDATE video SET date_time = ?, status = ?, licenseNum = NULL, badgeID = ? WHERE videoID = ?";
+    $stmt = mysqli_stmt_init($conn);
+    if (!mysqli_stmt_prepare($stmt, $sql)) {
+        header("location: " . $_SERVER['PHP_SELF'] . "?error=stmtfailed");
+        exit();
+    }else{
+        mysqli_stmt_bind_param($stmt, "sssi", $date_time, $status, $badgeID, $id);
+        mysqli_stmt_execute($stmt);
+        mysqli_stmt_close($stmt);
+        header("location: ../redlight.php?error=none");
+        exit();
+    }
+
+
+}
+
+
 
 //Admin Dashboard
 function emptyDashboard($badgeID, $adminID) {

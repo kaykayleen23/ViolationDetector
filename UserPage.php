@@ -2,14 +2,15 @@
 
 require_once "includes/dbh.inc.php";
 session_start();
+ini_set('display_errors', 0);
 $ID = $_SESSION["id-number"];
+$video = $_SESSION['videoURL'];
+$id = $_SESSION['vID'];
+$violation = $_SESSION['violation'];
 $sql = "SELECT * FROM usersinfo WHERE badgeID = ('$ID')";
 $results = mysqli_query($conn, $sql);
 $badgeID = mysqli_fetch_array($results);
 
-$sql1 = "SELECT * FROM onduty RIGHT JOIN usersInfo on onduty.badgeID = usersinfo.badgeID";
-$results1 = mysqli_query($conn, $sql1);
-$badgeID1 = mysqli_fetch_array($results1);
 ?>
 <!DOCTYPE html>
 <html>
@@ -91,6 +92,10 @@ $badgeID1 = mysqli_fetch_array($results1);
                             html += '<div class="underline">';
                         });
                         $("#data").html(html);
+                        $(".status-button").click(function () {
+                            var id = $(this).data("id");
+                            window.location.href = "includes/user.details.inc.php?id=" + id;
+                        });
                     },
                     error: function(jqXHR, textStatus, errorThrown) {
                         // Handle errors if any
@@ -195,7 +200,7 @@ $badgeID1 = mysqli_fetch_array($results1);
                         </div>
                     </div>
                 </div>
-                <div class="content-hcenter h-min-200 mb-2 " >
+                <div class="content-hcenter h-min-200 mb-2 mob-mb-2 " >
                     <div class="duty-info h-min-200" id="user_details">
                         <div class="content-hcenter h-min-100 top-half">
                         <div class="">

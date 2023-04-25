@@ -2,8 +2,8 @@
 require_once 'dbh.inc.php';
 
 session_start();
-$ID = $_SESSION["report_edit_id"];
-$deleteID = $_SESSION["report-delete-id"];
+$ID = $_SESSION["edit-id"];
+$deleteID = $_SESSION["delete-id"];
 echo $ID;
 if (isset($_POST["Edit"])) {
     $lastName = $_POST["last-name"];
