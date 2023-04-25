@@ -4,13 +4,6 @@ ini_set('display_errors', 0);
 require_once 'includes/dbh.inc.php';
 $video = $_SESSION['videoURL'];
 $id = $_SESSION['vID'];
-// Specify the file path on your computer
-$file_path = "sample.mp4";
-$date_time = date('Y-m-d H:i:s');
-// Insert the file path or URL into the database
-$query = "INSERT INTO video (violation, url, date_time, status) VALUES ('illegal lane change','$file_path', '$date_time', 'Pending')";
-// Execute the query
-mysqli_query($conn, $query);
 ?>
 
 <!DOCTYPE html>
