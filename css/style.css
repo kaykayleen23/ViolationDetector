@@ -864,8 +864,7 @@ img {
   border-radius: 20px;
   border: none;
   box-shadow: -5px -5px 10px #FAFBFF; opacity: 100%;
-  box-shadow: 5px 5px 10px #161b1d; opacity: 23%;
-  background-color: #f2f2f2;
+  box-shadow: 5px 5px 10px #161b1d; opacity: 40%;
 }
 /*log in button*/
 .button-radius{
@@ -1100,6 +1099,22 @@ h2.logo{
 
 /*VIOLATION PAGES*/
 /*video*/
+table {
+  font-family: arial, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+td, th {
+  border: 1px solid #dddddd;
+  text-align: left;
+  padding: 8px;
+}
+
+tr:nth-child(even) {
+  background-color: #dddddd;
+}
+
 .video{
   border-radius: 10px;
   background-color: #748ba4;
@@ -1130,6 +1145,7 @@ h2.logo{
   border: none;
   background-color: #f2f2f2;
   margin-bottom: 1.5rem;
+  color: #1f2631;
 }
 .menu {
   display: flex;
@@ -1200,13 +1216,25 @@ h2.logo{
   width: 80%;
 }
 .status-button{
+  text-align: center;
+  padding: 12px 25px;
+  border-radius: 5px;
   width: 100%;
-  background-color: transparent;
-  border: none;
+  background-color: #2b3542;
+  -webkit-transition: background-color 400ms ease, opacity 400ms ease, color 400ms ease;
+  transition: background-color 400ms ease, opacity 400ms ease, color 400ms ease;
+  color: #d8d7d3;
+  font-size: 12px;
+  line-height: 20px;
+  letter-spacing: 2px;
+  text-decoration: none;
+  text-transform: uppercase;
+  border: none !important;
+  cursor: pointer;
 }
 .status-button:hover{
-  background-color: #e0d3bb;
-  opacity: 40%;
+  background-color: #d8d7d3;
+  color: #2b3542;
   cursor: pointer;
 }
 /*END VIOLATION PAGES*/

@@ -326,7 +326,7 @@ function report($conn, $lastName, $firstName, $middleName, $birthday, $licenseNu
 
 
 //Status
-function emptyInputStatus($licenseNum, $status) {
+function emptyInputStatus($licenseNum, $status, $lastName, $firstName, $birthday, $licensePlate, $regNum) {
     $result;
     if (empty($licenseNum) || empty($status)) {
         $result = true;
@@ -336,14 +336,14 @@ function emptyInputStatus($licenseNum, $status) {
     }
     return $result;
 }
-function illegalreviewed($conn, $id, $licenseNum, $date_time, $status, $badgeID) {
-    $sql = "UPDATE video SET licenseNum = ?, date_time = ?, status = ?, badgeID = ? WHERE videoID= ?";
+function illegalreviewed($conn, $id, $licenseNum, $date_time, $status, $badgeID, $lastName, $firstName, $middleName, $birthday, $licensePlate, $regNum) {
+    $sql = "UPDATE video SET licenseNum = ?, date_time = ?, status = ?, badgeID = ?, lastName = ?, firstName = ?, middleName =?, birthday = ?, licensePLate = ?, regNum = ? WHERE videoID= $id";
     $stmt = mysqli_stmt_init($conn);
     if (!mysqli_stmt_prepare($stmt, $sql)) {
         header("location: " . $_SERVER['PHP_SELF'] . "?error=stmtfailed");
         exit();
     }else{
-        mysqli_stmt_bind_param($stmt, "ssssi", $licenseNum, $date_time, $status, $badgeID, $id);
+        mysqli_stmt_bind_param($stmt, "ssssssssss", $licenseNum, $date_time, $status, $badgeID, $lastName, $firstName, $middleName, $birthday, $licensePlate, $regNum);
         mysqli_stmt_execute($stmt);
         mysqli_stmt_close($stmt);
         header("location: ../illegallane.php?error=none");
@@ -365,14 +365,14 @@ function illegalunaddressed($conn, $id, $date_time, $status, $badgeID) {
     header("location: ../illegallane.php?error=none");
     exit();
 }
-function overreviewed($conn, $id, $licenseNum, $date_time, $status, $badgeID) {
-    $sql = "UPDATE video SET licenseNum = ?, date_time = ?, status = ?, badgeID = ? WHERE videoID= ?";
+function overreviewed($conn, $id, $licenseNum, $date_time, $status, $badgeID, $lastName, $firstName, $middleName, $birthday, $licensePlate, $regNum) {
+    $sql = "UPDATE video SET licenseNum = ?, date_time = ?, status = ?, badgeID = ?, lastName = ?, firstName = ?, middleName =?, birthday = ?, licensePLate = ?, regNum = ? WHERE videoID= $id";
     $stmt = mysqli_stmt_init($conn);
     if (!mysqli_stmt_prepare($stmt, $sql)) {
         header("location: " . $_SERVER['PHP_SELF'] . "?error=stmtfailed");
         exit();
     }else{
-        mysqli_stmt_bind_param($stmt, "ssssi", $licenseNum, $date_time, $status, $badgeID, $id);
+        mysqli_stmt_bind_param($stmt, "ssssssssss", $licenseNum, $date_time, $status, $badgeID, $lastName, $firstName, $middleName, $birthday, $licensePlate, $regNum);
         mysqli_stmt_execute($stmt);
         mysqli_stmt_close($stmt);
         header("location: ../overspeeding.php?error=none");
@@ -395,14 +395,14 @@ function overunaddressed($conn, $id, $date_time, $status, $badgeID) {
 
 
 }
-function redreviewed($conn, $id, $licenseNum, $date_time, $status, $badgeID) {
-    $sql = "UPDATE video SET licenseNum = ?, date_time = ?, status = ?, badgeID = ? WHERE videoID= ?";
+function redreviewed($conn, $id, $licenseNum, $date_time, $status, $badgeID, $lastName, $firstName, $middleName, $birthday, $licensePlate, $regNum) {
+    $sql = "UPDATE video SET licenseNum = ?, date_time = ?, status = ?, badgeID = ?, lastName = ?, firstName = ?, middleName =?, birthday = ?, licensePLate = ?, regNum = ? WHERE videoID= $id";
     $stmt = mysqli_stmt_init($conn);
     if (!mysqli_stmt_prepare($stmt, $sql)) {
         header("location: " . $_SERVER['PHP_SELF'] . "?error=stmtfailed");
         exit();
     }else{
-        mysqli_stmt_bind_param($stmt, "ssssi", $licenseNum, $date_time, $status, $badgeID, $id);
+        mysqli_stmt_bind_param($stmt, "ssssssssss", $licenseNum, $date_time, $status, $badgeID, $lastName, $firstName, $middleName, $birthday, $licensePlate, $regNum);
         mysqli_stmt_execute($stmt);
         mysqli_stmt_close($stmt);
         header("location: ../redlight.php?error=none");

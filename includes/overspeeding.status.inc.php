@@ -22,18 +22,23 @@ if (isset($_SESSION["id-number"])) {
 
 if (isset($_POST["Reviewed"])) {
     $status = $_POST["Reviewed"];
-    $licenseNum = $_POST["license-id"];
+    $lastName = $_POST["last-name"];
+    $firstName = $_POST["first-name"];
+    $middleName = $_POST["middle-name"];
+    $birthday = $_POST["birthday"];
+    $licenseNum = $_POST["license-number"];
+    $licensePlate = $_POST["license-plate"];
+    $regNum = $_POST["registration-number"];
+    $date_time = date("Y-m-d H:i:s");
 
     require_once 'functions.inc.php';
 
-    $date_time = date("Y-m-d H:i:s");
-
-    if (emptyInputStatus($licenseNum, $status) !== false) {
+    if (emptyInputStatus($licenseNum, $status, $lastName, $firstName, $birthday, $licensePlate, $regNum) !== false) {
         header("Location: ../overspeeding.php?error=incompletedetails");
         exit();
     }
 
-    overreviewed($conn, $id, $licenseNum, $date_time, $status, $badgeID);
+    overreviewed($conn, $id, $licenseNum, $date_time, $status, $badgeID, $lastName, $firstName, $middleName, $birthday, $licensePlate, $regNum);
     header("Location: ../overspeeding.php?error=none");
 }
 if (isset($_POST["Unaddressed"])) {

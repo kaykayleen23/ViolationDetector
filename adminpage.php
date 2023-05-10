@@ -34,7 +34,6 @@ $result = mysqli_query($conn, $query);
             <li role="presentation"><a href="registeredenforcers.php">Registered Enforcers</a></li>
             <li role="presentation"><a href="usersinfo.php">User Info</a></li>
             <li role="presentation"><a href="videos.php">Videos</a></li>
-            <li role="presentation"><a href="report.admin.php">Reports</a></li>
             <li role="presentation"><a href="admin.table.php">Admin</a></li>
             <li role="presentation"><a href="index.php">Logout</a></li>
         </ul>

@@ -50,7 +50,7 @@
                                     name="login"  value="login" data-name="login" placeholder="" id="login" />
                         </div>
                     </form>
-                    <div class=" mb-05 content-hcenter weight-50">
+                    <div class=" mb-05 content-hcenter weight-50 px-2">
                     <a href="./adminLogin.php" class="button-dark button-dark-main button-radius2 con">Admin</a>
                         </div>
                     <center class="mt-2">

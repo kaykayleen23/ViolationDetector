@@ -51,7 +51,6 @@ $result = mysqli_query($conn, $query);
                <li role="presentation"><a href="registeredenforcers.php">Registered Enforcers</a></li>
                <li role="presentation"><a href="usersinfo.php">User Info</a></li>
                <li role="presentation"><a href="videos.php">Videos</a></li>
-               <li role="presentation"><a href="report.admin.php">Reports</a></li>
                <li role="presentation"><a href="admin.table.php">Admin</a></li>
                <li role="presentation"><a href="index.php">Logout</a></li>
           </ul>
@@ -66,12 +65,18 @@ $result = mysqli_query($conn, $query);
                                    <tr>
                                         <th>ACTION</th>
                                         <th>VIDEO_ID</th>
-                                        <th>LICENSE NUMBER</th>
+                                        <th>LICENSE NO</th>
                                         <th>VIOLATION</th>
                                         <th>URL</th>
                                         <th>DATE</th>
                                         <th>STATUS</th>
                                         <th>BADGE_ID</th>
+                                        <th>LAST NAME</th>
+                                        <th>FIRST NAME</th>
+                                        <th>MIDDLE NAME</th>
+                                        <th>BIRTHDAY</th>
+                                        <th>LICENSE PLATE</th>
+                                        <th>REGISTER NO</th>
                                    </tr>
                               </thead>
                               <?php
@@ -100,6 +105,12 @@ $result = mysqli_query($conn, $query);
 							<td>' . $row['date_time'] . '</td>  
 							<td>' . $row['status'] . '</td>  
 							<td>' . $row['badgeID'] . '</td>  
+                                   <td>' . $row['lastName'] . '</td> 
+                                   <td>' . $row['firstName'] . '</td>  
+                                   <td>' . $row['middleName'] . '</td> 
+                                   <td>' . $row['birthday'] . '</td>    
+                                   <td>' . $row['licensePLate'] . '</td>  
+                                   <td>' . $row['regNum'] . '</td>  
 								
                                </tr>  
                                ';

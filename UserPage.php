@@ -6,11 +6,9 @@ ini_set('display_errors', 0);
 $ID = $_SESSION["id-number"];
 $video = $_SESSION['videoURL'];
 $id = $_SESSION['vID'];
-$violation = $_SESSION['violation'];
 $sql = "SELECT * FROM usersinfo WHERE badgeID = ('$ID')";
 $results = mysqli_query($conn, $sql);
 $badgeID = mysqli_fetch_array($results);
-
 ?>
 <!DOCTYPE html>
 <html>
@@ -27,30 +25,26 @@ $badgeID = mysqli_fetch_array($results);
     <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     <script>
-        $(document).ready(function() {
+        $(document).ready(function () {
             // Define a function to fetch data from server and update the web page
             function fetchData() {
                 $.ajax({
                     url: "includes/online.data.inc.php",  // URL of the PHP script that retrieves data from database
                     dataType: "json",   // Data type expected from server
-                    success: function(data) {
+                    success: function (data) {
                         // Update the web page with the retrieved data
                         var html = "";
-                        $.each(data, function(index, item) {
-                            html += '<div class="block-weighted ml-2 mt-1">';
-                            html += '<div class="weight-20">';
-                            html += '<h3 class="h4-bold text-center">Details: </h3>';
-                            html += '</div>';
-                            html += '<div class="weight-80">';
-                            html += '<p class=" h4">' + item.lastName + ', ' + item.badgeID + ' , ' + item.date_time + '</p>';
-                            html += '</div>';
-                            html += '</div>';
-                            html += '<div class="underline">';  
-                            html += '</div>';
+                        $.each(data, function (index, item) {
+                            html += '<tr>';
+                            html += '<td>' + item.badgeID + '</td>';
+                            html += '<td>' + item.lastName + '</td>';
+                            html += '<td>' + item.date_time + '</td>';
+                            html += '</tr>';
                         });
+                    
                         $("#data-container").html(html);
                     },
-                    error: function(jqXHR, textStatus, errorThrown) {
+                    error: function (jqXHR, textStatus, errorThrown) {
                         // Handle errors if any
                         console.log("Error: " + textStatus + ": " + errorThrown);
                     }
@@ -60,44 +54,42 @@ $badgeID = mysqli_fetch_array($results);
             setInterval(fetchData, 5000);
         });
     </script>
-        <script>
-        $(document).ready(function() {
+    <script>
+        $(document).ready(function () {
             // Define a function to fetch data from server and update the web page
             function fetchData() {
                 $.ajax({
                     url: "includes/data.inc.php",  // URL of the PHP script that retrieves data from database
                     dataType: "json",   // Data type expected from server
-                    success: function(data) {
+                    success: function (data) {
                         // Update the web page with the retrieved data
                         var html = "";
-                        $.each(data, function(index, item) {
-                            html += '<button class="status-button" data-id ="' + item.videoID + '">';
-                            html += '<div class="block-hweighted block-weighted ml-2">';
-                            html += '<div class="weight-20">';
-                            html += '<h3 class="h4-bold text-center">Details: </h3>';
-                            html += '</div>';
-                            html += '<div class="weight-80">';
-                            html += '<p class="h4">' + item.violation + ', ' + item.date_time + '</p>';
-                            html += '</div>';
-                            html += '</div>';
-                            html += '<div class="block-hweighted block-weighted ml-2 mb-1">';
-                            html += '<div class="weight-20">';
-                            html += '<h3 class="h4-bold text-center">Status: </h3>';
-                            html += '</div>';
-                            html += '<div class="weight-80">';
-                            html += '<p class="h4">' + item.status + '</p>';
-                            html += '</div>';
-                            html += '</div>';
-                            html += '</button>';
-                            html += '<div class="underline">';
+                        $.each(data, function (index, item) {
+                            html += '<tr>';
+                            html += '<td>' + item.videoID + '</td>';
+                            html += '<td>' + item.violation + '</td>';
+                            html += '<td>' + item.date_time + '</td>';
+                            html += '<td>' + item.status + '</td>';
+                            html += '<td><button class="status-button" data-id="' + item.videoID  + '">View</button></td>';
+                            html += '</tr>';
                         });
-                        $("#data").html(html);
+                        $("#data-rows-container").html(html);
                         $(".status-button").click(function () {
-                            var id = $(this).data("id");
-                            window.location.href = "includes/user.details.inc.php?id=" + id;
-                        });
+                        var id = $(this).data("id");
+                        var violation = $(this).closest("tr").find("td:nth-child(2)").text(); // Get the violation value
+                        if (violation === "illegal lane change") {
+                            // Redirect to specific page for this violation
+                            window.location.href = "includes/illegal.details.inc.php?id=" + id;
+                        } else if (violation === "beating the red light") {
+                            // Redirect to specific page for another violation
+                            window.location.href = "includes/red.details.inc.php?id=" + id;
+                        } else {
+                            // Default redirect if violation does not match any specific page
+                            window.location.href = "includes/overspeeding.details.inc.php?id=" + id;
+                        }
+                    });
                     },
-                    error: function(jqXHR, textStatus, errorThrown) {
+                    error: function (jqXHR, textStatus, errorThrown) {
                         // Handle errors if any
                         console.log("Error: " + textStatus + ": " + errorThrown);
                     }
@@ -126,21 +118,20 @@ $badgeID = mysqli_fetch_array($results);
         </div>
         <input class="mt-1" id="menu-toggle" type="checkbox" />
         <label class='menu-button-container mt-1' for="menu-toggle">
-        <div class='menu-button'></div>
-      </label>
-        <ul class="menu z-index">   
+            <div class='menu-button'></div>
+        </label>
+        <ul class="menu z-index">
             <a href="./UserPage.php">Dashboard</a>
             <a href="./overspeeding.php">Overspeeding</a>
             <a href="./illegallane.php">Lane Change</a>
             <a href="./redlight.php">Red Light</a>
-            <a href="./report.php">Report</a>
             <a href="includes/logout.inc.php">Logout</a>
         </ul>
-      </section>
+    </section>
     <div class="wrapper">
         <div class="block-vweighted block-weighted mt-2">
             <div class="weight-50 block-vweighted " id="order-1">
-                <div class="content-hcenter h-min-200 mb-2" >
+                <div class="content-hcenter h-min-200">
                     <div class="user-info h-min-100">
                         <div class="content-hcenter h-min-100 bg-dark top-half">
                             <div class="">
@@ -158,9 +149,11 @@ $badgeID = mysqli_fetch_array($results);
                                             <label class="label-bold ">LAST NAME</label>
                                         </div>
                                         <div class=" mx-2 mb-05">
-                                            <label class=" "><?php echo $badgeID[
-                                                "lastName"
-                                            ]; ?></label>
+                                            <label class=" ">
+                                                <?php echo $badgeID[
+                                                    "lastName"
+                                                ]; ?>
+                                            </label>
                                         </div>
                                     </div>
                                     <div class="weight-50">
@@ -168,9 +161,11 @@ $badgeID = mysqli_fetch_array($results);
                                             <label class=" label-bold">FIRST NAME</label>
                                         </div>
                                         <div class=" mx-2 mb-05">
-                                            <label class=" "><?php echo $badgeID[
-                                                "firstName"
-                                            ]; ?></label>
+                                            <label class=" ">
+                                                <?php echo $badgeID[
+                                                    "firstName"
+                                                ]; ?>
+                                            </label>
                                         </div>
                                     </div>
                                 </div>
@@ -180,9 +175,11 @@ $badgeID = mysqli_fetch_array($results);
                                             <label class="label-bold ">ID Number</label>
                                         </div>
                                         <div class=" mx-2 mb-05">
-                                            <label class=" "><?php echo $badgeID[
-                                                "badgeID"
-                                            ]; ?></label>
+                                            <label class=" ">
+                                                <?php echo $badgeID[
+                                                    "badgeID"
+                                                ]; ?>
+                                            </label>
                                         </div>
                                     </div>
                                     <div class="weight-50">
@@ -190,9 +187,11 @@ $badgeID = mysqli_fetch_array($results);
                                             <label class=" label-bold">Phone Number</label>
                                         </div>
                                         <div class=" mx-2 mb-05">
-                                            <label class=" "><?php echo $badgeID[
-                                                "usersPnumber"
-                                            ]; ?></label>
+                                            <label class=" ">
+                                                <?php echo $badgeID[
+                                                    "usersPnumber"
+                                                ]; ?>
+                                            </label>
                                         </div>
                                     </div>
                                 </div>
@@ -200,30 +199,50 @@ $badgeID = mysqli_fetch_array($results);
                         </div>
                     </div>
                 </div>
-                <div class="content-hcenter h-min-200 mb-2 mob-mb-2 " >
-                    <div class="duty-info h-min-200" id="user_details">
-                        <div class="content-hcenter h-min-100 top-half">
+                <div class=" px-2 " id="order-2">
+                    <div class=" ">
                         <div class="">
-                            <h2 class="h3-bold text-center">On Duty</h2>
-                        </div>
-                        </div>
-                        <div class="h-min-350" id="data-container">
-                           
+                            <div class="content-hcenter h-min-100 top-half">
+                                <div class="">
+                                    <h2 class="h3-bold text-center">On Duty</h2>
+                                </div>
+                            </div>
+                            <table class="table table-striped table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th>BadgeID</th>
+                                        <th>Last Name</th>
+                                        <th>Date/ Time</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="data-container">
+                                </tbody>
+                            </table>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="weight-50 mr-4 order-1 mob-m-0 mt-5o" id="order-2">
-                <div class="content-hcenter h-min-200 mb-2" id="order-2">
-                    <div class="logs-info h-min-200">
+            <div class="weight-50 p-2 " id="order-2">
+                <div class=" ">
+                    <div class="">
                         <div class="content-hcenter h-min-100 top-half">
                             <div class="">
                                 <h2 class="h3-bold text-center">Logs</h2>
                             </div>
                         </div>
-                        <div class="h-min-350" id="data">
-
-                        </div>
+                        <table class="table table-striped table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Violation</th>
+                                    <th>Date</th>
+                                    <th>Status</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody id="data-rows-container">
+                            </tbody>
+                        </table>
                     </div>
                 </div>
             </div>

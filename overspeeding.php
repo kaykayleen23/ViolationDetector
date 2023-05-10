@@ -38,28 +38,15 @@ mysqli_query($conn, $query);
                         // Update the web page with the retrieved data
                         var html = "";
                         $.each(data, function (index, item) {
-                            html += '<button class="status-button" data-id ="' + item.videoID + '">';
-                            html += '<div class="block-hweighted block-weighted ml-2">';
-                            html += '<div class="weight-20">';
-                            html += '<h3 class="h4-bold text-center">Details: </h3>';
-                            html += '</div>';
-                            html += '<div class="weight-80">';
-                            html += '<p class="h4">' + item.violation + ', ' + item.date_time + '</p>';
-                            html += '</div>';
-                            html += '</div>';
-                            html += '<div class="block-hweighted block-weighted ml-2 mb-1">';
-                            html += '<div class="weight-20">';
-                            html += '<h3 class="h4-bold text-center">Status: </h3>';
-                            html += '</div>';
-                            html += '<div class="weight-80">';
-                            html += '<p class="h4">' + item.status + '</p>';
-                            html += '</div>';
-                            html += '</div>';
-                            html += '</button>';
-                            html += '<div class="underline">';
-                            html += '</div>';
+                            html += '<tr>';
+                            html += '<td>' + item.videoID + '</td>';
+                            html += '<td>' + item.violation + '</td>';
+                            html += '<td>' + item.date_time + '</td>';
+                            html += '<td>' + item.status + '</td>';
+                            html += '<td><button class="status-button" data-id="' + item.videoID + '">View</button></td>';
+                            html += '</tr>';
                         });
-                        $("#data-container").html(html);
+                        $("#data-rows-container").html(html);
                         $(".status-button").click(function () {
                             var id = $(this).data("id");
                             window.location.href = "includes/overspeeding.details.inc.php?id=" + id;
@@ -75,6 +62,7 @@ mysqli_query($conn, $query);
             setInterval(fetchData, 5000);
         });
     </script>
+
     <link
         href="https://fonts.googleapis.com/css2?family=Karla:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Lora:wght@400;500&family=Montserrat:ital,wght@0,200;0,400;0,500;1,400&family=Rubik:wght@300;400;500&display=swap"
         rel="stylesheet">
@@ -101,7 +89,6 @@ mysqli_query($conn, $query);
             <a href="./overspeeding.php">Overspeeding</a>
             <a href="./illegallane.php">Lane Change</a>
             <a href="./redlight.php">Red Light</a>
-            <a href="./report.php">Report</a>
             <a href="./index.php">Logout</a>
         </ul>
     </section>
@@ -112,36 +99,52 @@ mysqli_query($conn, $query);
             <h1 class="h2 my-2">Overspeeding</h1>
         </center>
         <div class="block-vweighted block-weighted mt-2">
-            <div class="weight-50 " id="order-2">
-                <div class="content-hcenter h-min-200 mb-2 ">
-                    <div class="logs-info h-min-200">
+            <div class="weight-50 px-2 " id="order-2">
+                <div class=" ">
+                    <div class="">
                         <div class="content-hcenter h-min-100 top-half">
                             <div class="">
                                 <h2 class="h3-bold text-center">Logs</h2>
                             </div>
                         </div>
-                        <div class="h-min-350" id="data-container">
-
-                        </div>
+                        <table class="table table-striped table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Violation</th>
+                                    <th>Date</th>
+                                    <th>Status</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody id="data-rows-container">
+                            </tbody>
+                        </table>
                     </div>
                 </div>
             </div>
             <div class="weight-50 mr-4 order-1 mob-m-0" id="order-1">
-            <center class="mb-1">
+                <center class="mb-1">
                     <?php
-                        if (isset($_GET["error"])) {
-                            if ($_GET["error"] == "emptyvID") {
-                                echo "<p>Please click a video.</p>";
-                            }
-                        else if ($_GET["error"] == "incompletedetails") {
-                            echo "<p>Please enter the license number.</p>";
-                            }
-                        else if ($_GET["error"] == "none") {
+                    if (isset($_GET["error"])) {
+                        if ($_GET["error"] == "emptyvID") {
+                            echo "<p>Please click a video.</p>";
+                        } else if ($_GET["error"] == "incompletedetails") {
+                            echo "<p>Fill in all fields!</p>";
+                        } else if ($_GET["error"] == "none") {
                             echo "<p>Saved!</p>";
-                            }
+                        } else if ($_GET["error"] == "invalidlicenseNum") {
+                            echo "<p>Please enter a valid license number.</p>";
+                        } else if ($_GET["error"] == "invalidlicensePlate") {
+                            echo "<p>Please enter a valid license plate.</p>";
+                        } else if ($_GET["error"] == "invalidregNum") {
+                            echo "<p>Please enter a valid registration number.</p>";
+                        } else if ($_GET["error"] == "stmtfailed") {
+                            echo "<p>Something went wrong. please try again.</p>";
                         }
+                    }
                     ?>
-                    </center>
+                </center>
                 <div class="content-hcenter h-min-200 mb-2 ">
                     <div class="video h-min-200">
                         <div class="content-hcenter h-min-100 top-half">
@@ -156,34 +159,95 @@ mysqli_query($conn, $query);
                             <source src="<?php echo $video ?>" type="video/mp4">
                             </video>
                         </center>
-                        <center>
-                            <form action="includes/overspeeding.status.inc.php" method="POST">
-                                <div class=" mt-1 mx-3">
-                                    <div class=" mob-mb-1" id="order-1">
+                        <div class=" mob-w-100">
+                            <form class="px-2" action="includes/overspeeding.status.inc.php" method="post">
+                                <div class="block-weighted block-vweighted mb-2 mob-mb-1">
+                                    <div class="weight-25" id="order-1">
                                         <div class=" text-justify">
-                                            <label for="license-id" class=" text-dark">License Number</label>
+                                            <label for="last-name" class=" text-dark">Last Name</label>
                                         </div>
                                         <div class="">
-                                            <input type="text" class="mb-1" maxlength="256" name="license-id"
-                                                data-name="license-id" placeholder="" id="input" />
+                                            <input type="text" class="" maxlength="256" name="last-name"
+                                                data-name="last name" placeholder="" id="input" />
+                                        </div>
+                                    </div>
+                                    <div class="weight-25 mx-1 mob-m-0" id="order-2">
+                                        <div class="text-justify">
+                                            <label for="first-name" class="text-dark ">First Name</label>
+                                        </div>
+                                        <div class="">
+                                            <input type="text" class="" maxlength="256" name="first-name"
+                                                data-name="first name" placeholder="" id="input" />
+                                        </div>
+                                    </div>
+                                    <div class="weight-25" id="order-3">
+                                        <div class=" text-justify">
+                                            <label for="middle-name" class="text-dark ">Middle Name</label>
+                                        </div>
+                                        <div class="">
+                                            <input type="text" class="" maxlength="256" name="middle-name"
+                                                data-name="middle name" placeholder="" id="input" />
+                                        </div>
+                                    </div>
+                                    <div class="ml-1 weight-25 mob-m-0" id="order-4">
+                                        <div class=" text-justify">
+                                            <label for="birthday" class="text-dark ">Birthday</label>
+                                        </div>
+                                        <div class="">
+                                            <input style="width: 100%;" type="date" class="" maxlength="256"
+                                                name="birthday" data-name="birthday" placeholder="" id="date" />
                                         </div>
                                     </div>
                                 </div>
-                                <div class="block-vweighted block-weighted mb-2">
-                                    <div class="weight-50 mob-mb-1" id="order-1">
-                                        <input type="submit" class="button-dark-main button-radius-violation"
-                                            name="Unaddressed" value="Unaddressed" data-name="Unaddressed"
-                                            placeholder="" id="Unaddressed" />
+                                <div class="block-weighted block-vweighted mb-2 mob-mb-1">
+                                    <div class="weight-33" id="order-5">
+                                        <div class=" text-justify">
+                                            <label for="license-number" class=" text-dark">Driver's License ID</label>
+                                        </div>
+                                        <div class="">
+                                            <input type="text" class="" maxlength="256" name="license-number"
+                                                data-name="License Number" placeholder="" id="input" />
+                                        </div>
                                     </div>
-                                    <div class="weight-50" id="order-3">
-                                        <input type="submit" class="button-dark-main button-radius-violation"
-                                            name="Reviewed" value="Reviewed" data-name="Reviewed" placeholder=""
-                                            id="Reviewed" />
+                                    <div class="weight-33 mx-1 mob-m-0" id="order-6">
+                                        <div class="text-justify">
+                                            <label for="license-plate" class="text-dark ">License Plate No</label>
+                                        </div>
+                                        <div class="">
+                                            <input type="text" class="" maxlength="256" name="license-plate"
+                                                data-name="License Plate" placeholder="" id="input" />
+                                        </div>
+                                    </div>
+                                    <div class="weight-33" id="order-7">
+                                        <div class=" text-justify">
+                                            <label for="registration-number" class="text-dark ">Registration
+                                                No</label>
+                                        </div>
+                                        <div class="">
+                                            <input type="text" class="" maxlength="256" name="registration-number"
+                                                data-name="Registration Number" placeholder="" id="input" />
+                                        </div>
                                     </div>
                                 </div>
+                                <center>
+                                    <div class="block-vweighted block-weighted mb-2">
+                                        <div class="weight-50 mob-mb-1 hidden" id="order-1">
+                                            <input type="submit" class="button-dark-main button-radius-violation"
+                                                name="Unaddressed" value="Unaddressed" data-name="Unaddressed"
+                                                placeholder="" id="Unaddressed" />
+                                        </div>
+                                        <div class="weight-50" id="order-3">
+                                            <input type="submit" class="button-dark-main button-radius-violation"
+                                                name="Reviewed" value="Reviewed" data-name="Reviewed" placeholder=""
+                                                id="Reviewed" />
+                                        </div>
+                                    </div>
+                                </center>
+
                             </form>
-                        </center>
+                        </div>
                     </div>
+
                 </div>
 
             </div>
